@@ -1,17 +1,12 @@
 class Variable:
-    def __init__(self):
-        self.tangent = None
-        self.primal = None
+
+    def __init__(self, inner: 'Variable' = None):
+        self.value = None
+        self.derivative = None
+        self.inner = inner
 
     def __add__(self, other):
-        return Differentiable()
-
-    def __mul__(self, other):
-        return Differentiable()
-
-    def __truediv__(self, other):
-        return Differentiable()
+        return ()
 
     def df(self, x):
-        self.primal = x
-        self.tangent = 1
+        pass
