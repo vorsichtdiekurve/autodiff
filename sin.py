@@ -1,9 +1,9 @@
-from variable import Variable
+from base import Base
 from math import cos, sin
 
-class Sin(Variable):
-    def df(self, x):
+class Sin(Base):
+
+    def __evaluate__(self, x):
         self.inner.df(x)
         self.value = sin(self.inner.value)
         self.derivative = cos(self.inner.value) * self.inner.derivative
-        return self.derivative
