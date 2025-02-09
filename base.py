@@ -11,6 +11,12 @@ class Base:
     def __radd__(self, other):
         return Sum(self, other)
 
+    def __sub__(self, other):
+        return Difference(self, other)
+
+    def __rsub__(self, other):
+        return Difference(self, other)
+
     def __evaluate__(self, x):
         if isinstance(self.inner, Base):
             self.inner.df(x)
@@ -53,3 +59,25 @@ class Sum(Arithmetic):
         elif isinstance(self.summand2, Base):
             self.value = self.summand1 + self.summand2.value
             self.derivative = self.summand2.derivative
+
+class Difference(Arithmetic):
+
+    def __init__(self, minuend, subtrahend):
+        self.minuend = minuend
+        self.subtrahend = subtrahend
+
+    def __calculate_value_and_derivative__(self, x):
+        if isinstance(self.minuend, Base):
+            self.minuend.df(x)
+        if isinstance(self.subtrahend, Base):
+            self.subtrahend.df(x)
+
+        if isinstance(self.minuend, Base) and isinstance(self.subtrahend, Base):
+            self.value = self.minuend.value - self.subtrahend.value
+            self.derivative = self.minuend.derivative - self.subtrahend.derivative
+        elif isinstance(self.minuend, Base):
+            self.value = self.minuend.value - self.subtrahend
+            self.derivative = self.minuend.derivative
+        elif isinstance(self.subtrahend, Base):
+            self.value = self.minuend - self.subtrahend.value
+            self.derivative = -self.subtrahend.derivative

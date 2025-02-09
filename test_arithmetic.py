@@ -26,7 +26,7 @@ def test_addition(x, y, x_0, res):
     "x, y, x_0, res",
     [
         (Cos(X()), Sin(X()), 0, -1),
-        (Cos(X()), Sin(math.pi * 0.5 + X()), math.pi * -0.5, 1),
+        (Cos(X()), Sin(math.pi * 0.5 + X()), math.pi * -0.5, 0),
         (Cos(X()), Sin(math.pi * 1.5 + X()), math.pi * 1.5, 2),
         (Sin(X()), Cos(X()), math.pi * 0.5, 1),
         (Sin(X() + math.pi), Cos(X() + math.pi * 0.5), 0, 0),
