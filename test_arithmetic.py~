@@ -46,4 +46,4 @@ def test_subtraction(x, y, x_0, res):
     ]
 )
 def test_multiplication(x, y, x_0, res):
-    assert (x * y).df(x_0) == pytest.approx(res)
+    assert (x - y).df(x_0) == pytest.approx(res)
