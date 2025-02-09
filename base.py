@@ -8,6 +8,9 @@ class Base:
     def __add__(self, other):
         return Sum(self, other)
 
+    def __radd__(self, other):
+        return Sum(self, other)
+
     def __evaluate__(self, x):
         if isinstance(self.inner, Base):
             self.inner.df(x)
