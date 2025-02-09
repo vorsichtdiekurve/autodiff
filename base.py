@@ -17,6 +17,12 @@ class Base:
     def __rsub__(self, other):
         return Difference(self, other)
 
+    def __mul__(self, other):
+        return Product(self, other)
+
+    def __rmul__(self, other):
+        return Product(self, other)
+
     def __evaluate__(self, x):
         if isinstance(self.inner, Base):
             self.inner.df(x)
@@ -81,3 +87,25 @@ class Difference(Arithmetic):
         elif isinstance(self.subtrahend, Base):
             self.value = self.minuend - self.subtrahend.value
             self.derivative = -self.subtrahend.derivative
+
+class Product(Arithmetic):
+
+    def __init__(self, factor1, factor2):
+        self.factor1 = factor1
+        self.factor2 = factor2
+
+    def __calculate_value_and_derivative__(self, x):
+        if isinstance(self.factor1, Base):
+            self.factor1.df(x)
+        if isinstance(self.factor2, Base):
+            self.factor2.df(x)
+
+        if isinstance(self.factor1, Base) and isinstance(self.factor2, Base):
+            self.value = self.factor1.value * self.factor2.value
+            self.derivative = self.factor1.derivative * self.factor2.value + self.factor1.value * self.factor2.derivative
+        elif isinstance(self.factor1, Base):
+            self.value = self.factor1.value * self.factor2
+            self.derivative = self.factor1.derivative * self.factor2
+        elif isinstance(self.factor2, Base):
+            self.value = self.factor1 * self.factor2.value
+            self.derivative = self.factor2.derivative * self.factor1

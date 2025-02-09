@@ -41,7 +41,7 @@ def test_subtraction(x, y, x_0, res):
     "x, y, x_0, res",
     [
         (Cos(X()), 5, 0, 0),
-        (X(), Sin(X()), math.pi, -1),
+        (X(), Sin(X()), math.pi, -math.pi),
         (2, Cos(X()), math.pi * 1.5 , 2),
     ]
 )
