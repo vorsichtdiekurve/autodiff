@@ -1,7 +1,6 @@
 import pytest
 
-from cos import Cos
-from sin import Sin
+from trig import Sin, Cos
 
 @pytest.mark.parametrize(
     "x, x_0",
