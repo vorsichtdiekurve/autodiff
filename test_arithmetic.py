@@ -98,3 +98,4 @@ def test_power(x, y, x_0, res):
 )
 def test_exponential(x, y, x_0, res):
     assert (x ** y).df(x_0) == pytest.approx(res)
+

@@ -1,6 +1,7 @@
 import pytest
 import math
 
+from logn import Logn
 from trig import Sin, Cos
 from x import X
 
@@ -10,6 +11,7 @@ from x import X
         (Sin(Cos(Sin(Cos(X())))), 0.3, 0.0963065647258788),
         (Cos(Sin(Cos(Cos(X())))), math.e, 0.144475893363656),
         (Sin(math.pi * X()), 0, math.pi),
+        (Logn(Sin(X())), math.e, 1/math.tan(math.e)),
     ]
 )
 def test_chain_rule(x, x_0, res):
