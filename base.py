@@ -8,6 +8,9 @@ class Base:
         self.derivative = None
         self.inner = inner
 
+    def __neg__(self):
+        return -1 * self
+
     def __add__(self, other):
         return Sum(self, other)
 

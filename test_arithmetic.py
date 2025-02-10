@@ -99,3 +99,13 @@ def test_power(x, y, x_0, res):
 def test_exponential(x, y, x_0, res):
     assert (x ** y).df(x_0) == pytest.approx(res)
 
+@pytest.mark.parametrize(
+    "x, x_0, res",
+    [
+        (-X(), 0, -1),
+        (-Cos(X()), math.pi / 2, 1),
+    ]
+)
+def test_negation(x, x_0, res):
+    assert x.df(x_0) == pytest.approx(res)
+
