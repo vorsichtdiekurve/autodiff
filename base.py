@@ -29,6 +29,15 @@ class Base:
     def __rtruediv__(self, other):
         return Quotient(other, self)
 
+    def __pow__(self, other):
+        if isinstance(other, Base):
+            return Exponential(self, other)
+        else:
+            return Power(self, other)
+
+    def __rpow__(self, other):
+        return Exponential(other, self)
+
     def __evaluate__(self, x):
         if isinstance(self.inner, Base):
             self.inner.df(x)
@@ -135,3 +144,27 @@ class Quotient(Arithmetic):
         elif isinstance(self.divisor, Base):
             self.value = self.dividend / self.divisor.value
             self.derivative = -self.dividend * self.divisor.derivative / self.divisor.value**2
+
+class Power(Arithmetic):
+
+    def __init__(self, base, exponent):
+        self.base = base
+        self.exponent = exponent
+
+    def __calculate_value_and_derivative__(self, x):
+        self.base.df(x)
+
+        self.value = self.base.value**self.exponent
+        self.derivative = self.exponent * self.base.value**(self.exponent-1)
+
+class Exponential(Arithmetic):
+
+    def __init__(self, base, exponent):
+        raise NotImplementedError
+        self.base = base
+        self.exponent = exponent
+
+    def __calculate_value_and_derivative__(self, x):
+        if isinstance(self.base, Base):
+            self.base.df(x)
+
