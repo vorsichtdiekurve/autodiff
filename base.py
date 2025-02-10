@@ -15,13 +15,19 @@ class Base:
         return Difference(self, other)
 
     def __rsub__(self, other):
-        return Difference(self, other)
+        return Difference(other, self)
 
     def __mul__(self, other):
         return Product(self, other)
 
     def __rmul__(self, other):
         return Product(self, other)
+
+    def __truediv__(self, other):
+        return Quotient(self, other)
+
+    def __rtruediv__(self, other):
+        return Quotient(other, self)
 
     def __evaluate__(self, x):
         if isinstance(self.inner, Base):
@@ -62,9 +68,6 @@ class Sum(Arithmetic):
         elif isinstance(self.summand1, Base):
             self.value = self.summand1.value + self.summand2
             self.derivative = self.summand1.derivative
-        elif isinstance(self.summand2, Base):
-            self.value = self.summand1 + self.summand2.value
-            self.derivative = self.summand2.derivative
 
 class Difference(Arithmetic):
 
@@ -106,6 +109,29 @@ class Product(Arithmetic):
         elif isinstance(self.factor1, Base):
             self.value = self.factor1.value * self.factor2
             self.derivative = self.factor1.derivative * self.factor2
-        elif isinstance(self.factor2, Base):
-            self.value = self.factor1 * self.factor2.value
-            self.derivative = self.factor2.derivative * self.factor1
+
+class Quotient(Arithmetic):
+
+    def __init__(self, dividend, divisor):
+        self.dividend = dividend
+        self.divisor = divisor
+
+    def __calculate_value_and_derivative__(self, x):
+        if isinstance(self.dividend, Base):
+            self.dividend.df(x)
+        if isinstance(self.divisor, Base):
+            self.divisor.df(x)
+            if self.divisor.value == 0:
+                raise ZeroDivisionError("Function is not differentiable at the point x={}.".format(x))
+        elif self.divisor == 0:
+            raise ZeroDivisionError("Function is not differentiable at the point x={}.".format(x))
+
+        if isinstance(self.dividend, Base) and isinstance(self.divisor, Base):
+            self.value = self.dividend.value / self.divisor.value
+            self.derivative = (self.dividend.derivative * self.divisor.value - self.dividend.value * self.divisor.derivative) / self.divisor.value**2
+        elif isinstance(self.dividend, Base):
+            self.value = self.dividend.value / self.divisor
+            self.derivative = self.dividend.derivative / self.divisor
+        elif isinstance(self.divisor, Base):
+            self.value = self.dividend / self.divisor.value
+            self.derivative = -self.dividend * self.divisor.derivative / self.divisor.value**2

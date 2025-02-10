@@ -16,6 +16,8 @@ from cos import Cos
         (Sin(X() + math.pi), Cos(X() + math.pi * 0.5), 0, -2),
         (X(), X(), 0, 2),
         (Sin(X()), X(), 0, 2),
+        (X(), 1, 4, 1),
+        (1, X(), 4, 1),
     ]
 )
 def test_addition(x, y, x_0, res):
@@ -31,6 +33,8 @@ def test_addition(x, y, x_0, res):
         (Sin(X() + math.pi), Cos(X() + math.pi * 0.5), 0, 0),
         (X(), X(), 0, 0),
         (Sin(X()), X(), 0, 0),
+        (X(), 1, 4, 1),
+        (1, X(), 4, -1),
     ]
 )
 def test_subtraction(x, y, x_0, res):
@@ -51,7 +55,7 @@ def test_multiplication(x, y, x_0, res):
     "x, y, x_0, res",
     [
         (Cos(X()), 5, math.pi * 0.5, -0.2),
-        (X(), Sin(X()), math.pi / 3, 2 * (1 - math.pi * math.sqrt(3))),
+        (X(), Sin(X()), math.pi / 3, (6 * math.sqrt(3) - 2 * math.pi) / 9),
         (2, Cos(X()), math.pi / 4 , 2 * math.sqrt(2)),
     ]
 )
@@ -63,7 +67,7 @@ def test_division(x, y, x_0, res):
     [
         (X(), 0, 0),
         (Cos(X()), Sin(X()), 0),
-        (Sin(X()), Cos(X()), math.pi * 0.5),
+        #(Sin(X()), Cos(X()), math.pi * 0.5), TODO: maybe add a warning when divisor approaches zero about possibility of errors due to machine representation
     ]
 )
 def test_division_by_zero_raises_zero_division_error(x, y, x_0):
