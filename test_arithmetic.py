@@ -92,8 +92,8 @@ def test_power(x, y, x_0, res):
     [
         (0, Sin(X()), 3, 0),
         (1, Sin(X()), 3, 0),
-        (2, 2 * X(), 3, 11.09035488895912),
-        (X(), Cos(X()), math.e, -0.299838984544407),
+        (2, 2 * X(), 3, 128 * math.log(2)),
+        (X(), Cos(X()), math.e, (math.e ** (math.cos(math.e) - 1)) * (math.cos(math.e) - math.e * math.sin(math.e))),
     ]
 )
 def test_exponential(x, y, x_0, res):

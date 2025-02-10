@@ -1,3 +1,6 @@
+import math
+
+
 class Base:
 
     def __init__(self, inner = None):
@@ -160,11 +163,26 @@ class Power(Arithmetic):
 class Exponential(Arithmetic):
 
     def __init__(self, base, exponent):
-        raise NotImplementedError
         self.base = base
         self.exponent = exponent
 
     def __calculate_value_and_derivative__(self, x):
+        self.exponent.df(x)
         if isinstance(self.base, Base):
             self.base.df(x)
+
+            self.value = self.base.value**self.exponent.value
+            self.derivative = (self.base.value ** self.exponent.value) * (
+                        self.exponent.value * self.base.derivative / self.base.value + self.exponent.derivative * math.log(
+                    self.base.value))
+        else:
+            if self.base == 0:
+                self.value = 0
+                self.derivative = 0
+            elif self.base == 1:
+                self.value = 1
+                self.derivative = 0
+            else:
+                self.value = self.base**self.exponent.value
+                self.derivative = math.log(self.base) * self.base**self.exponent.value * self.exponent.derivative
 
