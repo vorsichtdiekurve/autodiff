@@ -2,6 +2,7 @@ import math
 
 import pytest
 
+from logn import Logn
 from x import X
 from trig import Sin, Cos
 
@@ -45,6 +46,8 @@ def test_subtraction(x, y, x_0, res):
         (Cos(X()), 5, 0, 0),
         (X(), Sin(X()), math.pi, -math.pi),
         (2, Cos(X()), math.pi * 1.5 , 2),
+        (Cos(math.pi / 4), Sin(X()), 0, math.sqrt(2) / 2),
+        (Sin(X()), Logn(math.e**2), 0, 2)
     ]
 )
 def test_multiplication(x, y, x_0, res):

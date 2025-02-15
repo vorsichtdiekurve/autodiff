@@ -49,10 +49,13 @@ class Base:
             self.inner.df(x)
             self.__calculate_value_and_derivative__(x)
         else:
-            self.value = self.inner
+            self.__calculate_constant__()
             self.derivative = 0
 
     def __calculate_value_and_derivative__(self, x):
+        pass
+
+    def __calculate_constant__(self):
         pass
 
     def df(self, x):
